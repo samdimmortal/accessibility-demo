@@ -19,33 +19,34 @@
   <script src="./src/js/main.js" defer></script>
 </head>
 
-<body class="min-h-screen font-sans text-white">
+<body class="min-h-screen font-sans bg-black text-white">
 
-  <!-- ARIA LIVE REGION: WCAG 1.3.1 & 4.1.2 -->
+  <!-- ARIA LIVE REGION -->
   <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- HEADER: accessible navigation -->
-  <header class="flex justify-between items-center p-4">
-    <h1 class="text-lg font-bold">MoodSense</h1>
+  <!-- HEADER -->
+  <header class="flex justify-between items-center p-4 bg-gray-900">
+    <div class="flex items-center gap-3">
+      <img src="./images/headlogo.webp" alt="MoodSense logo" class="h-10 w-auto" />
+      <h1 class="text-lg font-bold">MoodSense</h1>
+    </div>
     <nav class="flex gap-6">
-      <button id="startTour" class="underline" aria-label="Start accessibility tour">
-        Tour
-      </button>
+      <a href="#" class="underline">Contact</a>
+      <button id="startTour" class="underline" aria-label="Start accessibility tour">Tour</button>
     </nav>
   </header>
 
-  <!-- VISUAL CONTENT: WCAG 1.4.13 (visual non-essential) -->
-  <main id="visualContent" class="p-10 bg-white text-black">
-    <h2 class="text-3xl font-bold mb-4">
-      How are you feeling today?
-    </h2>
+  <!-- MAIN CONTENT -->
+  <main id="visualContent" class="p-10 text-white">
+    <h2 class="text-3xl font-bold mb-4">How are you feeling today?</h2>
 
-    <div class="flex gap-2 max-w-md">
-      <!-- WCAG 2.1.1: keyboard accessible input -->
+    <!-- Search input -->
+    <div class="flex gap-2 max-w-md items-center border border-gray-300 rounded overflow-hidden bg-white text-black mb-6">
+      <img src="./images/logo.webp" alt="Search icon" class="h-6 w-6 ml-2" />
       <input
         id="moodSearch"
         type="text"
-        class="border p-2 flex-1"
+        class="flex-1 p-2"
         placeholder="Type how you feel"
         aria-label="Mood search"
       />
@@ -55,6 +56,20 @@
         aria-label="Search Google"
       >→</button>
     </div>
+
+    <!-- Mood rating emojis -->
+    <div id="moodRatings" class="flex gap-3 justify-center flex-wrap" aria-label="Select your mood">
+      <button class="mood-btn" data-emoji="🤩" aria-label="Excited">🤩</button>
+      <button class="mood-btn" data-emoji="😀" aria-label="Happy">😀</button>
+      <button class="mood-btn" data-emoji="🙂" aria-label="Content">🙂</button>
+      <button class="mood-btn" data-emoji="😐" aria-label="Neutral">😐</button>
+      <button class="mood-btn" data-emoji="😕" aria-label="Confused">😕</button>
+      <button class="mood-btn" data-emoji="🙁" aria-label="Sad">🙁</button>
+      <button class="mood-btn" data-emoji="☹️" aria-label="Upset">☹️</button>
+      <button class="mood-btn" data-emoji="😣" aria-label="Frustrated">😣</button>
+      <button class="mood-btn" data-emoji="😖" aria-label="Distressed">😖</button>
+      <button class="mood-btn" data-emoji="😭" aria-label="Crying">😭</button>
+    </div>
   </main>
 
   <!-- ACCESSIBILITY CONTROLS -->
@@ -62,7 +77,6 @@
     id="accessibilityControls"
     class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white text-black p-4 rounded shadow"
   >
-    <!-- WCAG 2.1.1: checkbox keyboard accessible, role switch -->
     <label class="flex items-center gap-3">
       <input
         id="visionToggle"
@@ -72,7 +86,9 @@
       />
       Enable visual experience (sighted mode)
     </label>
+    <p class="mt-2 text-sm">
+      Visual users: Enable your screen reader if desired (Windows: NVDA/JAWS, Mac: VoiceOver, iOS/Android: TalkBack/VoiceOver)
+    </p>
   </section>
-
 </body>
 </html>
