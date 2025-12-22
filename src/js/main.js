@@ -1,82 +1,109 @@
+// main.js
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('visionToggle');
-  const html = document.documentElement;
   const liveRegion = document.getElementById('liveRegion');
-  const searchBtn = document.getElementById('searchBtn');
+  const body = document.body;
+  const searchForm = document.getElementById('searchForm');
   const searchInput = document.getElementById('moodSearch');
-  const startTour = document.getElementById('startTour');
-  const moodButtons = document.querySelectorAll('.mood-btn');
+  const screenReaderHint = document.getElementById('screenReaderHint');
+  const startTourBtn = document.getElementById('startTour');
 
-  // Start in blind mode by default
-  html.classList.add('blind-mode');
-  toggle.checked = false;
-
-  // Toggle sighted mode
-  toggle.addEventListener('change', () => {
-    if (toggle.checked) {
-      html.classList.remove('blind-mode');
-      toggle.setAttribute('aria-checked', 'true');
-      liveRegion.textContent = 'Sighted mode enabled';
-    } else {
-      html.classList.add('blind-mode');
-      toggle.setAttribute('aria-checked', 'false');
-      liveRegion.textContent = 'Blind mode enabled';
-    }
-  });
-
-  // Search button opens Google in a new tab
-  searchBtn.addEventListener('click', () => {
-    const query = searchInput.value.trim();
-    if (query) {
-      liveRegion.textContent = 'Opening Google search';
-      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
-    }
-  });
-
-  // Enter key triggers search
-  searchInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') searchBtn.click();
-  });
-
-  // Mood rating selection
-  moodButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const emoji = btn.dataset.emoji;
-      liveRegion.textContent = `You selected ${emoji} as your mood`;
-      // Optional visual feedback
-      moodButtons.forEach(b => b.style.transform = 'scale(1)');
-      btn.style.transform = 'scale(1.5)';
-    });
-  });
-
-  // Shepherd tour setup
+  // Initialize Shepherd tour
   const tour = new Shepherd.Tour({
     defaultStepOptions: {
-      scrollTo: true,
-      cancelIcon: { enabled: true }
+      cancelIcon: {
+        enabled: true
+      },
+      scrollTo: { behavior: 'smooth', block: 'center' }
     }
   });
 
   tour.addStep({
-    title: 'Header',
-    text: 'This is the header with logo and navigation. Use the Tour button to explore features.',
-    attachTo: { element: 'header', on: 'bottom' },
-    buttons: [{ text: 'Next', action: tour.next }]
+    id: 'welcome',
+    title: 'Welcome to MoodSense',
+    text: 'This tour will guide you through the main features of this page.',
+    buttons: [
+      {
+        text: 'Next',
+        action: tour.next
+      }
+    ]
   });
 
   tour.addStep({
-    title: 'Search',
-    text: 'Here you can type your mood and search Google.',
-    attachTo: { element: '#moodSearch', on: 'bottom' },
-    buttons: [{ text: 'Next', action: tour.next }]
+    id: 'search',
+    title: 'Search Box',
+    text: 'Use this box to type your mood or any search term. Press enter or the arrow to search Google.',
+    attachTo: {
+      element: '#moodSearch',
+      on: 'bottom'
+    },
+    buttons: [
+      {
+        text: 'Back',
+        action: tour.back
+      },
+      {
+        text: 'Next',
+        action: tour.next
+      }
+    ]
   });
 
   tour.addStep({
-    title: 'Mood Ratings',
-    text: 'Select an emoji that represents how you feel today.',
-    attachTo: { element: '#moodRatings', on: 'top' },
-    buttons: [{ text: 'Done', action: tour.complete }]
+    id: 'moodRating',
+    title: 'Rate Your Mood',
+    text: 'Select an emoji that best describes your current mood.',
+    attachTo: {
+      element: '[aria-label="Mood emoji rating"]',
+      on: 'top'
+    },
+    buttons: [
+      {
+        text: 'Back',
+        action: tour.back
+      },
+      {
+        text: 'Done',
+        action: tour.complete
+      }
+    ]
   });
 
-  startTour.addEventListener('click', () => tour.start());
+  // Start tour on button click
+  startTourBtn.addEventListener('click', () => {
+    tour.start();
+  });
+
+  // Toggle vision mode
+  toggle.addEventListener('change', () => {
+    if (toggle.checked) {
+      // Visual mode: show colors, enable aria
+      body.classList.remove('blind-mode');
+      toggle.setAttribute('aria-checked', 'true');
+      liveRegion.textContent = 'Visual mode enabled.';
+      screenReaderHint.classList.remove('hidden');
+    } else {
+      // Blind mode: blank screen, minimal visible elements
+      body.classList.add('blind-mode');
+      toggle.setAttribute('aria-checked', 'false');
+      liveRegion.textContent = 'Blind mode enabled. Visual elements hidden.';
+      screenReaderHint.classList.add('hidden');
+    }
+  });
+
+  // On page load start in blind mode (unchecked)
+  toggle.checked = false;
+  toggle.dispatchEvent(new Event('change'));
+
+  // Google search form handler
+  searchForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const query = searchInput.value.trim();
+    if (query.length) {
+      // Open Google search in new tab
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+      liveRegion.textContent = 'Opening Google search.';
+    }
+  });
 });

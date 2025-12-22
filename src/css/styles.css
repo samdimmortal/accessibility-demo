@@ -1,48 +1,59 @@
-/* Main visual content background using bg.webp */
-#visualContent {
-  background: 
-    linear-gradient(135deg, #6200eecc 0%, #3700b3cc 100%), 
-    url('../images/bg.webp') no-repeat center center;
-  background-size: cover;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px rgb(98 0 238 / 0.3);
-  color: white;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-  text-align: center;
-  transition: filter 0.3s ease;
+/* Reset and base styles */
+body {
+  margin: 0;
+  font-family: 'Spline Sans', sans-serif;
 }
 
-/* Blind mode: hide visual content */
-.blind-mode #visualContent {
-  filter: brightness(0) opacity(0);
-}
-
-/* Mood buttons styling */
-.mood-btn {
-  font-size: 2rem;
-  padding: 0.5rem;
-  border-radius: 50%;
-  border: 2px solid white;
-  background-color: transparent;
+/* Emoji buttons */
+.emoji-btn {
+  background: white;
+  border-radius: 9999px;
+  border: 1px solid #ddd;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.mood-btn:hover,
-.mood-btn:focus {
-  transform: scale(1.2);
-  background-color: rgba(255, 255, 255, 0.2);
+.emoji-btn:hover,
+.emoji-btn:focus {
+  border-color: #8b5cf6; /* purple-500 */
+  outline: none;
+  transform: scale(1.15);
+}
+
+/* Form input styles */
+input[type='search'] {
+  font-size: 1rem;
+  border: none;
   outline: none;
 }
 
-/* Optional input focus outline */
-input:focus {
-  outline: 2px solid #6200EE;
+/* Focus outline for inputs and buttons */
+input:focus,
+button:focus {
+  outline: 3px solid #a78bfa; /* purple-400 */
+  outline-offset: 2px;
 }
 
-/* Accessibility controls styling */
-#accessibilityControls {
-  z-index: 1000;
+/* Toggle switch using peer styling (Tailwind utility) */
+#visionToggle:checked ~ #screenReaderHint {
+  display: block;
+}
+
+/* ARIA live region hidden */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
