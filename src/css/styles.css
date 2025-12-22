@@ -1,59 +1,75 @@
-/* Reset and base styles */
-body {
-  margin: 0;
-  font-family: 'Spline Sans', sans-serif;
+/* Custom styles for toggle switch */
+#visionToggle {
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  -webkit-appearance: none;
+  background: #d1d5db; /* Tailwind gray-300 */
+  outline: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
-
-/* Emoji buttons */
-.emoji-btn {
+#visionToggle:checked {
+  background: #7c3aed; /* Tailwind purple-700 */
+}
+#visionToggle::before {
+  content: '';
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
   background: white;
   border-radius: 9999px;
-  border: 1px solid #ddd;
-  width: 3rem;
-  height: 3rem;
-  font-size: 1.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.3s ease;
+}
+#visionToggle:checked::before {
+  transform: translateX(1.5rem);
 }
 
-.emoji-btn:hover,
-.emoji-btn:focus {
-  border-color: #8b5cf6; /* purple-500 */
-  outline: none;
-  transform: scale(1.15);
+/* For hiding content when in blind mode */
+body.blind-mode main#mainContent,
+body.blind-mode section#accessibilityControls > #screenReaderTips {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
 }
 
-/* Form input styles */
-input[type='search'] {
+/* When visual mode is enabled */
+body.visual-mode main#mainContent,
+body.visual-mode section#accessibilityControls > #screenReaderTips {
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+}
+
+/* Form input & button styles */
+form#searchForm input[type="search"] {
   font-size: 1rem;
-  border: none;
-  outline: none;
 }
 
-/* Focus outline for inputs and buttons */
-input:focus,
-button:focus {
-  outline: 3px solid #a78bfa; /* purple-400 */
-  outline-offset: 2px;
-}
-
-/* Toggle switch using peer styling (Tailwind utility) */
-#visionToggle:checked ~ #screenReaderHint {
-  display: block;
-}
-
-/* ARIA live region hidden */
-.sr-only {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  padding: 0 !important;
-  margin: -1px !important;
-  overflow: hidden !important;
-  clip: rect(0, 0, 0, 0) !important;
-  white-space: nowrap !important;
-  border: 0 !important;
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  main#mainContent {
+    padding: 1.5rem;
+  }
+  form#searchForm {
+    flex-direction: column;
+  }
+  form#searchForm input[type="search"] {
+    padding: 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  form#searchForm button {
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 0.75rem;
+    width: 100%;
+  }
+  #emojiContainer {
+    gap: 1rem;
+  }
 }
