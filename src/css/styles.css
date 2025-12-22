@@ -1,0 +1,20 @@
+/* ===== BLIND MODE ===== */
+/* WCAG 1.3.1: Content hidden visually but still accessible */
+.blind-mode {
+  background-color: black;
+}
+
+.blind-mode #visualContent {
+  visibility: hidden; /* screen reader can still read content */
+}
+
+/* Always visible controls for blind mode */
+.blind-mode header,
+.blind-mode #accessibilityControls {
+  visibility: visible;
+}
+
+/* Shepherd tour fixes for readability */
+.shepherd-element {
+  color: black; /* contrast improvement: WCAG 1.4.3 */
+}

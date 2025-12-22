@@ -1,0 +1,11 @@
+{
+  "name": "moodsense-accessibility-demo",
+  "version": "1.0.0",
+  "description": "Accessibility demo showing blind vs visual experience",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "shepherd.js": "^11.2.0"
+  }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="blind-mode">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoodSense – Accessibility Demo</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Shepherd CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/css/shepherd.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/js/shepherd.min.js" defer></script>
+
+  <!-- Local CSS -->
+  <link rel="stylesheet" href="./src/css/styles.css" />
+
+  <!-- Local JS -->
+  <script src="./src/js/main.js" defer></script>
+</head>
+
+<body class="min-h-screen font-sans text-white">
+
+  <!-- ARIA LIVE REGION: WCAG 1.3.1 & 4.1.2 -->
+  <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- HEADER: accessible navigation -->
+  <header class="flex justify-between items-center p-4">
+    <h1 class="text-lg font-bold">MoodSense</h1>
+    <nav class="flex gap-6">
+      <button id="startTour" class="underline" aria-label="Start accessibility tour">
+        Tour
+      </button>
+    </nav>
+  </header>
+
+  <!-- VISUAL CONTENT: WCAG 1.4.13 (visual non-essential) -->
+  <main id="visualContent" class="p-10 bg-white text-black">
+    <h2 class="text-3xl font-bold mb-4">
+      How are you feeling today?
+    </h2>
+
+    <div class="flex gap-2 max-w-md">
+      <!-- WCAG 2.1.1: keyboard accessible input -->
+      <input
+        id="moodSearch"
+        type="text"
+        class="border p-2 flex-1"
+        placeholder="Type how you feel"
+        aria-label="Mood search"
+      />
+      <button
+        id="searchBtn"
+        class="bg-black text-white px-4"
+        aria-label="Search Google"
+      >→</button>
+    </div>
+  </main>
+
+  <!-- ACCESSIBILITY CONTROLS -->
+  <section
+    id="accessibilityControls"
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white text-black p-4 rounded shadow"
+  >
+    <!-- WCAG 2.1.1: checkbox keyboard accessible, role switch -->
+    <label class="flex items-center gap-3">
+      <input
+        id="visionToggle"
+        type="checkbox"
+        role="switch"
+        aria-checked="false"
+      />
+      Enable visual experience (sighted mode)
+    </label>
+  </section>
+
+</body>
+</html>
