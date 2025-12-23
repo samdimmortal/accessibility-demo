@@ -5,64 +5,80 @@
   <title>Accessibility Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Material Symbols (with preconnect for GitHub Pages) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    rel="stylesheet"
+  />
+
+  <!-- Local styles with relative path -->
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
 
-  <!-- Visual Veil (blocks sighted users only) -->
+  <!-- Visual Veil (blocks sighted users when toggle off) -->
   <div id="visualVeil" aria-hidden="true"></div>
 
   <!-- Toggle (always visible, above veil) -->
   <div id="toggleContainer">
-    <button id="visionToggle" role="switch" aria-checked="false">
+    <button id="visionToggle" role="switch" aria-checked="false" aria-label="Toggle to see visual UI">
       <span class="material-symbols-outlined">visibility</span>
       I wish to see
     </button>
-    <p id="systemText"></p>
+    <p id="systemText" aria-live="polite" aria-atomic="true"></p>
   </div>
 
   <!-- FULL UI (always rendered) -->
   <div id="app">
 
     <header class="header">
-      <img src="src/headlogo.webp" alt="Accessibility icon">
+      <img src="./src/headlogo.webp" alt="Accessibility icon" />
       <h1>Accessibility Demo</h1>
 
       <div class="actions">
-        <button id="tourBtn">
+        <button id="tourBtn" aria-label="Start guided tour">
           <span class="material-symbols-outlined">tour</span>
           Take a tour
         </button>
-        <img src="src/logo.webp" alt="LinkedIn">
+        <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">
+          <img src="./src/logo.webp" alt="LinkedIn profile" />
+        </a>
       </div>
     </header>
 
-    <div class="search">
-      <span class="material-symbols-outlined">search</span>
-      <input type="search" placeholder="Search anything..." />
+    <div class="search" role="search">
+      <span class="material-symbols-outlined" aria-hidden="true">search</span>
+      <input
+        type="search"
+        placeholder="Search anything..."
+        aria-label="Search"
+        id="searchInput"
+      />
     </div>
 
-    <div class="emojis">
-      <button>😀<span>12</span></button>
-      <button>❤️<span>8</span></button>
-      <button>😄<span>15</span></button>
-      <button>😮<span>5</span></button>
-      <button>😢<span>4</span></button>
-      <button>😡<span>6</span></button>
-      <button>😍<span>9</span></button>
-      <button>😟<span>3</span></button>
-      <button>👍<span>14</span></button>
+    <div class="emojis" role="list" aria-label="Emoji buttons with counters">
+      <button type="button" aria-label="Happy emoji, 12 clicks">😀<span>12</span></button>
+      <button type="button" aria-label="Heart emoji, 8 clicks">❤️<span>8</span></button>
+      <button type="button" aria-label="Laughing emoji, 15 clicks">😄<span>15</span></button>
+      <button type="button" aria-label="Surprised emoji, 5 clicks">😮<span>5</span></button>
+      <button type="button" aria-label="Crying emoji, 4 clicks">😢<span>4</span></button>
+      <button type="button" aria-label="Angry emoji, 6 clicks">😡<span>6</span></button>
+      <button type="button" aria-label="Heart eyes emoji, 9 clicks">😍<span>9</span></button>
+      <button type="button" aria-label="Worried emoji, 3 clicks">😟<span>3</span></button>
+      <button type="button" aria-label="Thumbs up emoji, 14 clicks">👍<span>14</span></button>
     </div>
 
-    <p class="goal">
+    <p class="goal" tabindex="0">
       The goal of this project is to help <strong>visual users</strong> understand the
       experience of <strong>non-visual users</strong>.
     </p>
 
   </div>
 
-  <script src="main.js"></script>
+  <!-- Local JS with relative path -->
+  <script src="./main.js"></script>
 </body>
 </html>
