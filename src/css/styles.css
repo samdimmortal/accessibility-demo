@@ -1,4 +1,3 @@
-/* ================= RESET & BASE ================= */
 * {
   box-sizing: border-box;
 }
@@ -6,156 +5,104 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  transition: background 0.4s ease;
+  background: url("src/bg.webp") center / cover no-repeat fixed;
 }
 
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-/* ================= VISION OFF ================= */
-body.vision-off {
+/* ---------- VISUAL VEIL ---------- */
+#visualVeil {
+  position: fixed;
+  inset: 0;
   background: #000;
-  color: #fff;
+  z-index: 10;
+  transition: opacity 0.4s ease;
 }
 
-body.vision-off #visualContent {
-  display: none;
-}
-
-.toggle-only {
-  min-height: 100vh;
+/* ---------- TOGGLE ---------- */
+#toggleContainer {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
   display: grid;
   place-content: center;
-  text-align: center;
   gap: 1rem;
+  text-align: center;
+  pointer-events: none;
 }
 
-/* ================= TOGGLE ================= */
-.toggle-switch {
+#visionToggle {
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
   gap: .6rem;
   padding: 1rem 1.5rem;
   border-radius: 999px;
   border: none;
-  background: #e8eaf6;
   font-size: 1.1rem;
   cursor: pointer;
 }
 
-.system-info {
-  font-size: .95rem;
-  color: #bbb;
+#systemText {
+  color: #ccc;
+  font-size: .9rem;
 }
 
-/* ================= VISION ON ================= */
-body.vision-on {
-  background:
-    url("src/bg.webp") center / cover no-repeat fixed;
-  color: #1d1b20;
-}
-
-body.vision-on #visualContent {
-  display: block;
-}
-
-/* ================= HEADER ================= */
-.app-header {
+/* ---------- UI ---------- */
+.header {
   max-width: 1100px;
   margin: 1.5rem auto;
   padding: 1rem 1.5rem;
+  background: #f5f7fc;
   border-radius: 18px;
-  background: #f4f6fb;
-  box-shadow: 8px 8px 16px #cfd3e6,
-              -8px -8px 16px #ffffff;
-
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.logo {
-  height: 42px;
+.header img {
+  height: 40px;
 }
 
-.header-actions {
+.actions {
   margin-left: auto;
   display: flex;
   gap: .75rem;
 }
 
-.header-actions button {
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  border: none;
-  border-radius: 10px;
-  padding: .5rem .75rem;
-  background: #eef1f8;
-  cursor: pointer;
-}
-
-/* ================= SEARCH ================= */
-.search-area {
-  display: flex;
-  justify-content: center;
-  margin: 2.5rem 0;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  width: 500px;
+.search {
+  max-width: 520px;
+  margin: 2.5rem auto;
   padding: .9rem 1.2rem;
+  background: #f5f7fc;
   border-radius: 999px;
-  background: #f4f6fb;
-  box-shadow: inset 6px 6px 12px #d0d4e6,
-              inset -6px -6px 12px #ffffff;
+  display: flex;
+  gap: .6rem;
 }
 
-.search-box input {
+.search input {
   border: none;
   outline: none;
   background: transparent;
   width: 100%;
-  font-size: 1rem;
 }
 
-/* ================= EMOTES ================= */
-.emotes {
+.emojis {
   display: flex;
   justify-content: center;
   gap: 1.2rem;
   flex-wrap: wrap;
 }
 
-.emotes button {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  text-align: center;
-}
-
-.emotes span {
+.emojis span {
   display: block;
-  margin-top: .3rem;
-  font-size: .9rem;
-  background: #eef1f8;
-  border-radius: 6px;
-  padding: .2rem .4rem;
+  background: #fff;
+  border-radius: 999px;
+  font-size: .85rem;
+  margin-top: .25rem;
 }
 
-/* ================= GOAL ================= */
 .goal {
   text-align: center;
   margin: 3rem auto;
-  max-width: 600px;
-  font-size: 1rem;
+  max-width: 700px;
+  font-size: 1.1rem;
 }

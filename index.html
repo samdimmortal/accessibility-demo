@@ -2,83 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Accessibility Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="vision-off">
+<body>
 
-  <!-- ================= TOGGLE (ALWAYS VISIBLE) ================= -->
-  <main class="toggle-only">
-    <button
-      id="visionToggle"
-      role="switch"
-      aria-checked="false"
-      aria-describedby="toggle-desc"
-      class="toggle-switch"
-    >
-      <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+  <!-- Visual Veil (blocks sighted users only) -->
+  <div id="visualVeil" aria-hidden="true"></div>
+
+  <!-- Toggle (always visible, above veil) -->
+  <div id="toggleContainer">
+    <button id="visionToggle" role="switch" aria-checked="false">
+      <span class="material-symbols-outlined">visibility</span>
       I wish to see
     </button>
+    <p id="systemText"></p>
+  </div>
 
-    <p id="toggle-desc" class="system-info"></p>
-  </main>
+  <!-- FULL UI (always rendered) -->
+  <div id="app">
 
-  <!-- ================= VISUAL CONTENT ================= -->
-  <div id="visualContent" hidden>
-
-    <header class="app-header">
-      <img src="src/headlogo.webp" alt="Accessibility icon" class="logo">
-
+    <header class="header">
+      <img src="src/headlogo.webp" alt="Accessibility icon">
       <h1>Accessibility Demo</h1>
 
-      <div class="header-actions">
-        <button id="tourBtn" aria-label="Take a tour">
+      <div class="actions">
+        <button id="tourBtn">
           <span class="material-symbols-outlined">tour</span>
           Take a tour
         </button>
-
-        <a href="https://linkedin.com/in/yourprofile"
-           aria-label="LinkedIn profile"
-           target="_blank" rel="noopener">
-          <img src="src/logo.webp" alt="" />
-        </a>
+        <img src="src/logo.webp" alt="LinkedIn">
       </div>
     </header>
 
-    <section class="search-area">
-      <form id="searchForm" role="search">
-        <label for="searchInput" class="sr-only">Search</label>
-        <div class="search-box">
-          <span class="material-symbols-outlined">search</span>
-          <input id="searchInput" type="search" placeholder="Search..." />
-        </div>
-      </form>
-    </section>
+    <div class="search">
+      <span class="material-symbols-outlined">search</span>
+      <input type="search" placeholder="Search anything..." />
+    </div>
 
-    <section class="emotes">
-      <button aria-label="Happy">😀<span>12</span></button>
-      <button aria-label="Love">❤️<span>8</span></button>
-      <button aria-label="Laugh">😄<span>15</span></button>
-      <button aria-label="Wow">😮<span>5</span></button>
-      <button aria-label="Cry">😢<span>4</span></button>
-      <button aria-label="Angry">😡<span>6</span></button>
-      <button aria-label="Heart Eyes">😍<span>9</span></button>
-      <button aria-label="Sad">😟<span>3</span></button>
-      <button aria-label="Like">👍<span>14</span></button>
-    </section>
+    <div class="emojis">
+      <button>😀<span>12</span></button>
+      <button>❤️<span>8</span></button>
+      <button>😄<span>15</span></button>
+      <button>😮<span>5</span></button>
+      <button>😢<span>4</span></button>
+      <button>😡<span>6</span></button>
+      <button>😍<span>9</span></button>
+      <button>😟<span>3</span></button>
+      <button>👍<span>14</span></button>
+    </div>
 
-    <section class="goal">
-      <p>
-        The goal of the project is to help visual users understand non-visual users.
-      </p>
-    </section>
+    <p class="goal">
+      The goal of this project is to help <strong>visual users</strong> understand the
+      experience of <strong>non-visual users</strong>.
+    </p>
 
   </div>
 
