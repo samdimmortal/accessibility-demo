@@ -1,71 +1,57 @@
-/* =========================
-   Toggle Visibility Logic
-   WCAG: hidden attribute removes from visual AND AT
-   ========================= */
+/* ================= TOGGLE LOGIC ================= */
 
-const toggle = document.getElementById('visionToggle');
-const visualElements = document.querySelectorAll('.visual-only');
+const toggle = document.getElementById("visionToggle");
+const body = document.body;
+const visual = document.getElementById("visualContent");
 
-toggle.addEventListener('click', () => {
-  const enabled = toggle.getAttribute('aria-checked') === 'true';
-  toggle.setAttribute('aria-checked', String(!enabled));
+function setVision(on) {
+  body.classList.toggle("vision-on", on);
+  body.classList.toggle("vision-off", !on);
+  toggle.setAttribute("aria-checked", String(on));
+  visual.hidden = !on;
+}
 
-  visualElements.forEach(el => {
-    el.hidden = enabled;
-  });
+toggle.addEventListener("click", () => {
+  const isOn = toggle.getAttribute("aria-checked") === "true";
+  setVision(!isOn);
 });
 
-/* =========================
-   Search Logic
-   ========================= */
+/* ================= OS DETECTION ================= */
 
-document.getElementById('searchForm').addEventListener('submit', e => {
+const desc = document.getElementById("toggle-desc");
+const ua = navigator.userAgent.toLowerCase();
+const platform = navigator.platform.toLowerCase();
+
+if (platform.includes("win")) {
+  desc.textContent = "You're on Windows. Press NVDA + Ctrl + Q to toggle the screen reader.";
+} else if (platform.includes("mac")) {
+  desc.textContent = "You're on macOS. Press Cmd + F5 to toggle VoiceOver.";
+} else if (/android/.test(ua)) {
+  desc.textContent = "You're on Android. Enable TalkBack and swipe to navigate.";
+} else if (/iphone|ipad/.test(ua)) {
+  desc.textContent = "You're on iOS. Enable VoiceOver and swipe left or right.";
+} else {
+  desc.textContent = "Use your system's screen reader and keyboard navigation.";
+}
+
+/* ================= SEARCH ================= */
+
+document.getElementById("searchForm").addEventListener("submit", e => {
   e.preventDefault();
-  const query = document.getElementById('searchInput').value.trim();
-  if (query) {
+  const q = searchInput.value.trim();
+  if (q) {
     window.open(
-      `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-      '_blank'
+      `https://www.google.com/search?q=${encodeURIComponent(q)}`,
+      "_blank"
     );
   }
 });
 
-/* =========================
-   Emoticon Counters
-   ========================= */
+/* ================= EMOTE COUNTERS ================= */
 
-document.querySelectorAll('.emotes button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const span = btn.querySelector('span');
+document.querySelectorAll(".emotes button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const span = btn.querySelector("span");
     span.textContent = Number(span.textContent) + 1;
   });
-});
-
-/* =========================
-   Shepherd Tour
-   ========================= */
-
-const tour = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }
-});
-
-tour.addStep({
-  title: 'Vision Toggle',
-  text: 'This toggle controls whether visual elements are displayed.',
-  attachTo: { element: '#visionToggle', on: 'bottom' },
-  buttons: [{ text: 'Next', action: tour.next }]
-});
-
-tour.addStep({
-  title: 'Search',
-  text: 'This behaves like a standard web search.',
-  attachTo: { element: '#searchInput', on: 'bottom' },
-  buttons: [{ text: 'Finish', action: tour.complete }]
-});
-
-document.getElementById('tourBtn').addEventListener('click', () => {
-  tour.start();
 });
