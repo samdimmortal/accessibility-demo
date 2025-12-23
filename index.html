@@ -1,82 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" class="blind-mode">
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Accessibility Demo – Mood Tracker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- Tailwind CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- WCAG: Clear, descriptive title -->
+  <title>Accessibility Demo</title>
 
-<!-- Shepherd.js -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/css/shepherd.css"/>
-<script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/js/shepherd.min.js" defer></script>
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
-<!-- Local CSS -->
-<link rel="stylesheet" href="./src/css/styles.css" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
 
-<!-- Local JS -->
-<script src="./src/js/main.js" defer></script>
+  <!-- Shepherd (already assumed in your project) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/css/shepherd.css" />
 </head>
 
-<body class="min-h-screen bg-black text-white font-sans transition-colors duration-300">
+<body>
 
-<!-- ARIA LIVE REGION -->
-<div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  <!-- HEADER -->
+  <header class="app-header visual-only" hidden>
+    <img src="headlogo.webp" alt="Accessibility Demo logo" class="logo" />
 
-<!-- HEADER -->
-<header class="flex justify-between items-center p-4 bg-black">
-  <img src="./src/images/headlogo.webp" alt="Header Logo" class="h-10"/>
-  <nav class="flex gap-6 items-center">
-    <a href="https://www.linkedin.com/in/sameer-mishra-8378b431/" target="_blank" rel="noopener noreferrer"
-       class="text-white font-medium hover:underline focus:underline">
-      Contact
-    </a>
-    <button id="startTour" class="text-white font-medium underline focus:outline-none" aria-label="Start accessibility tour">
-      Tour
-    </button>
-  </nav>
-</header>
+    <h1 id="page-title">Accessibility Demo</h1>
 
-<!-- MAIN VISUAL CONTENT -->
-<main id="visualContent" class="p-6 hidden transition-opacity duration-500">
-  <div class="max-w-4xl mx-auto flex flex-col gap-6">
-    <img src="./src/images/bg.webp" alt="Decorative Background" class="w-full rounded-xl shadow-md"/>
-    <h2 class="text-3xl font-bold">How are you feeling today?</h2>
-    <div class="flex gap-2 flex-col md:flex-row">
-      <input id="moodSearch" type="text" placeholder="Type how you feel" 
-             class="border p-2 flex-1 rounded" aria-label="Mood search"/>
-      <button id="searchBtn" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800" 
-              aria-label="Search Google">→</button>
-    </div>
+    <nav aria-label="Primary">
+      <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener">
+        Contact
+      </a>
 
-    <!-- Mood buttons -->
-    <div id="moodButtons" class="flex flex-wrap gap-3 mt-4">
-      <button data-mood="🤩" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">🤩 <span class="count">0</span></button>
-      <button data-mood="😀" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😀 <span class="count">0</span></button>
-      <button data-mood="🙂" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">🙂 <span class="count">0</span></button>
-      <button data-mood="😐" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😐 <span class="count">0</span></button>
-      <button data-mood="😕" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😕 <span class="count">0</span></button>
-      <button data-mood="🙁" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">🙁 <span class="count">0</span></button>
-      <button data-mood="☹️" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">☹️ <span class="count">0</span></button>
-      <button data-mood="😣" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😣 <span class="count">0</span></button>
-      <button data-mood="😖" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😖 <span class="count">0</span></button>
-      <button data-mood="😭" class="emoji-btn p-4 text-2xl rounded-full bg-white text-black hover:scale-110 transition">😭 <span class="count">0</span></button>
-    </div>
-  </div>
-</main>
+      <!-- WCAG: Icon button has aria-label -->
+      <button id="tourBtn" aria-label="Start guided tour">
+        <span class="material-symbols-outlined" aria-hidden="true">tour</span>
+      </button>
+    </nav>
+  </header>
 
-<!-- BLIND MODE / ACCESSIBILITY CONTROL -->
-<section id="accessibilityControls" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-white text-black p-4 rounded shadow">
-  <label class="flex items-center gap-3">
-    <input id="visionToggle" type="checkbox" role="switch" aria-checked="false"/>
-    Enable visual experience (sighted mode)
-  </label>
-  <p id="screenReaderTips" class="text-sm mt-2 hidden">
-    To enable screen reader:
-    <br>Windows: NVDA or Narrator
-    <br>Mac: VoiceOver (Cmd+F5)
-    <br>iOS: VoiceOver (Settings → Accessibility)
-    <br>Android: TalkBack (Settings → Accessibility)
-  </p>
-</section>
+  <!-- TOGGLE SECTION (always visible) -->
+  <main>
+    <section class="vision-toggle">
+      <!-- WCAG: role switch + aria-checked -->
+      <button
+        id="visionToggle"
+        role="switch"
+        aria-checked="false"
+        aria-describedby="toggle-desc toggle-tip"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">visibility</span>
+        I wish to see
+      </button>
+
+      <p id="toggle-desc">
+        This system detects your operating system and provides relevant keyboard shortcuts.
+      </p>
+
+      <!-- Tooltip (visible, not hover-only → WCAG friendly) -->
+      <p id="toggle-tip" role="tooltip" class="tooltip">
+        Enable this to reveal visual elements, colors, and layout.
+      </p>
+    </section>
+
+    <!-- SEARCH -->
+    <section class="visual-only" hidden>
+      <form id="searchForm" role="search" aria-label="Web search">
+        <label for="searchInput" class="sr-only">Search the web</label>
+        <div class="search-box">
+          <span class="material-symbols-outlined" aria-hidden="true">search</span>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search..."
+          />
+        </div>
+      </form>
+    </section>
+
+    <!-- EMOTICONS -->
+    <section class="emotes visual-only" hidden aria-label="Feedback reactions">
+      <!-- WCAG: Each button has a clear label -->
+      <button aria-label="Happy reaction">😊 <span>0</span></button>
+      <button aria-label="Excited reaction">😁 <span>0</span></button>
+      <button aria-label="Thinking reaction">🤔 <span>0</span></button>
+      <button aria-label="Confused reaction">😕 <span>0</span></button>
+      <button aria-label="Surprised reaction">😮 <span>0</span></button>
+      <button aria-label="Sad reaction">😢 <span>0</span></button>
+      <button aria-label="Angry reaction">😡 <span>0</span></button>
+      <button aria-label="Love reaction">😍 <span>0</span></button>
+      <button aria-label="Neutral reaction">😐 <span>0</span></button>
+      <button aria-label="Celebration reaction">🎉 <span>0</span></button>
+    </section>
+
+    <!-- PROJECT GOAL -->
+    <section class="visual-only" hidden>
+      <p class="goal">
+        The goal of this project is to help visual users understand how non-visual users
+        experience the web, while demonstrating WCAG-compliant and ARIA-friendly design.
+      </p>
+    </section>
+  </main>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11.2.0/dist/js/shepherd.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
