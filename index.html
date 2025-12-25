@@ -2,83 +2,134 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Accessibility Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Accessibility Demo</title>
 
-  <!-- Material Symbols (with preconnect for GitHub Pages) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Material Symbols (Icons) -->
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
     rel="stylesheet"
   />
 
-  <!-- Local styles with relative path -->
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- Shepherd -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/shepherd.js@11/dist/css/shepherd.css"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+  <!-- Background -->
+  <img src="bg.webp" alt="" class="background" aria-hidden="true" />
 
-  <!-- Visual Veil (blocks sighted users when toggle off) -->
-  <div id="visualVeil" aria-hidden="true"></div>
-
-  <!-- Toggle (always visible, above veil) -->
-  <div id="toggleContainer">
-    <button id="visionToggle" role="switch" aria-checked="false" aria-label="Toggle to see visual UI">
-      <span class="material-symbols-outlined">visibility</span>
-      I wish to see
-    </button>
-    <p id="systemText" aria-live="polite" aria-atomic="true"></p>
-  </div>
-
-  <!-- FULL UI (always rendered) -->
-  <div id="app">
-
-    <header class="header">
-      <img src="./src/headlogo.webp" alt="Accessibility icon" />
+  <!-- Header -->
+  <header class="top-bar" aria-label="Main navigation">
+    <div class="brand">
+      <img src="headlogo.webp" alt="Project logo" class="logo" />
       <h1>Accessibility Demo</h1>
+    </div>
 
-      <div class="actions">
-        <button id="tourBtn" aria-label="Start guided tour">
-          <span class="material-symbols-outlined">tour</span>
-          Take a tour
+    <nav>
+      <a
+        href="https://www.linkedin.com/"
+        target="_blank"
+        rel="noopener"
+        aria-label="Visit LinkedIn profile"
+      >
+        <span class="material-symbols-outlined">link</span>
+        LinkedIn
+      </a>
+
+      <button id="tourBtn" aria-label="Start guided tour">
+        <span class="material-symbols-outlined">tour</span>
+        Tour
+      </button>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- TOGGLE (always visible) -->
+    <section class="toggle-section">
+      <button
+        id="visionToggle"
+        aria-pressed="false"
+        aria-describedby="toggleHint"
+      >
+        <span class="material-symbols-outlined">visibility</span>
+        I wish to see
+      </button>
+
+      <p id="toggleHint" class="tooltip" role="note">
+        Turn this on to experience the site visually.
+      </p>
+
+      <p id="osInfo" class="os-info" aria-live="polite"></p>
+    </section>
+
+    <!-- VISUAL CONTENT (hidden by default) -->
+    <section id="visualContent" hidden>
+      <!-- Search -->
+      <form
+        class="search"
+        role="search"
+        aria-label="Web search"
+      >
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search the web"
+          aria-label="Search input"
+        />
+        <button type="submit" aria-label="Search">
+          <span class="material-symbols-outlined">search</span>
         </button>
-        <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer">
-          <img src="./src/logo.webp" alt="LinkedIn profile" />
-        </a>
-      </div>
-    </header>
+      </form>
 
-    <div class="search" role="search">
-      <span class="material-symbols-outlined" aria-hidden="true">search</span>
-      <input
-        type="search"
-        placeholder="Search anything..."
-        aria-label="Search"
-        id="searchInput"
-      />
-    </div>
+      <!-- Mood Counter -->
+      <section
+        class="mood"
+        aria-labelledby="moodTitle"
+      >
+        <h2 id="moodTitle">Mood Counter</h2>
 
-    <div class="emojis" role="list" aria-label="Emoji buttons with counters">
-      <button type="button" aria-label="Happy emoji, 12 clicks">😀<span>12</span></button>
-      <button type="button" aria-label="Heart emoji, 8 clicks">❤️<span>8</span></button>
-      <button type="button" aria-label="Laughing emoji, 15 clicks">😄<span>15</span></button>
-      <button type="button" aria-label="Surprised emoji, 5 clicks">😮<span>5</span></button>
-      <button type="button" aria-label="Crying emoji, 4 clicks">😢<span>4</span></button>
-      <button type="button" aria-label="Angry emoji, 6 clicks">😡<span>6</span></button>
-      <button type="button" aria-label="Heart eyes emoji, 9 clicks">😍<span>9</span></button>
-      <button type="button" aria-label="Worried emoji, 3 clicks">😟<span>3</span></button>
-      <button type="button" aria-label="Thumbs up emoji, 14 clicks">👍<span>14</span></button>
-    </div>
+        <div class="mood-buttons">
+          <!-- 10 buttons -->
+          <button aria-label="Mood 1">😊</button>
+          <button aria-label="Mood 2">🙂</button>
+          <button aria-label="Mood 3">😐</button>
+          <button aria-label="Mood 4">😕</button>
+          <button aria-label="Mood 5">😟</button>
+          <button aria-label="Mood 6">😢</button>
+          <button aria-label="Mood 7">😭</button>
+          <button aria-label="Mood 8">😠</button>
+          <button aria-label="Mood 9">😡</button>
+          <button aria-label="Mood 10">🤯</button>
+        </div>
 
-    <p class="goal" tabindex="0">
-      The goal of this project is to help <strong>visual users</strong> understand the
-      experience of <strong>non-visual users</strong>.
-    </p>
+        <div
+          id="moodCount"
+          aria-live="polite"
+        >
+          Total clicks: 0
+        </div>
+      </section>
 
-  </div>
+      <!-- Goal -->
+      <section class="goal">
+        <p>
+          The goal of this project is to help visual users understand how
+          non-visual users experience the web, emphasizing accessibility,
+          semantics, and assistive technology support.
+        </p>
+      </section>
+    </section>
+  </main>
 
-  <!-- Local JS with relative path -->
-  <script src="./main.js"></script>
+  <!-- Shepherd -->
+  <script src="https://cdn.jsdelivr.net/npm/shepherd.js@11"></script>
+  <script src="main.js"></script>
 </body>
 </html>
