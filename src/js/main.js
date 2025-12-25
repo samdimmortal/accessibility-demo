@@ -1,81 +1,81 @@
-// =======================
-// OS DETECTION
-// =======================
-const osInfo = document.getElementById("osInfo");
-
-function detectOS() {
-  const platform = navigator.platform.toLowerCase();
-
-  if (platform.includes("win")) return "Windows: Shortcut Alt + Shift + S";
-  if (platform.includes("mac")) return "macOS: Shortcut Control + Option + S";
-  if (platform.includes("linux")) return "Linux: Shortcut Alt + Shift + S";
-
-  return "Unknown OS";
-}
-
-osInfo.textContent = detectOS();
-
-// =======================
-// TOGGLE VISUAL MODE
-// =======================
+// =====================
+// Toggle visual content
+// =====================
 const toggle = document.getElementById("visionToggle");
 const visualContent = document.getElementById("visualContent");
+const osShortcut = document.getElementById("osShortcut");
 
 toggle.addEventListener("click", () => {
-  const enabled = toggle.getAttribute("aria-pressed") === "true";
+  const isOn = toggle.getAttribute("aria-pressed") === "true";
+  toggle.setAttribute("aria-pressed", String(!isOn));
 
-  toggle.setAttribute("aria-pressed", String(!enabled));
-  visualContent.hidden = enabled;
-});
-
-// =======================
-// SEARCH
-// =======================
-document.querySelector(".search").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const q = document.getElementById("searchInput").value.trim();
-  if (q) {
-    window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`, "_blank");
+  if (isOn) {
+    // Back to blind mode
+    visualContent.classList.add("visually-hidden");
+    document.body.style.background = "black";
+  } else {
+    // Visual mode
+    visualContent.classList.remove("visually-hidden");
+    document.body.style.background = "";
   }
 });
 
-// =======================
-// MOOD COUNTER
-// =======================
-let count = 0;
-const counter = document.getElementById("moodCount");
+// =====================
+// Detect OS and show shortcut
+// =====================
+const platform = navigator.platform.toLowerCase();
+if (platform.includes("win")) {
+  osShortcut.textContent = "OS Detected: Windows => Shortcut key: Ctrl + Alt + T";
+} else if (platform.includes("mac")) {
+  osShortcut.textContent = "OS Detected: Mac => Shortcut key: Cmd + Option + T";
+} else {
+  osShortcut.textContent = "OS Detected: Other => Shortcut key: Ctrl + Alt + T";
+}
 
-document.querySelectorAll(".mood-buttons button").forEach((btn) => {
+// =====================
+// Mood counter logic
+// =====================
+document.querySelectorAll(".mood-counter button").forEach((btn) => {
+  const countSpan = btn.querySelector(".count");
+  let count = 0;
   btn.addEventListener("click", () => {
     count++;
-    counter.textContent = `Total clicks: ${count}`;
+    countSpan.textContent = count;
   });
 });
 
-// =======================
-// SHEPHERD TOUR
-// =======================
+// =====================
+// Shepherd tour
+// =====================
 const tour = new Shepherd.Tour({
+  useModalOverlay: true,
   defaultStepOptions: {
-    scrollTo: true,
     cancelIcon: { enabled: true },
-  },
+    scrollTo: { behavior: 'smooth', block: 'center' }
+  }
 });
 
 tour.addStep({
-  title: "Welcome",
-  text: "This demo shows how accessibility-first design works.",
-  attachTo: { element: "#visionToggle", on: "bottom" },
-  buttons: [{ text: "Next", action: tour.next }],
+  id: 'step-1',
+  text: 'This is the search bar where users can search.',
+  attachTo: { element: '.search', on: 'bottom' },
+  buttons: [
+    { text: 'Next', action: tour.next }
+  ]
 });
 
 tour.addStep({
-  title: "Search",
-  text: "This search behaves like Google.",
-  attachTo: { element: ".search", on: "top" },
-  buttons: [{ text: "Done", action: tour.complete }],
+  id: 'step-2',
+  text: 'These are mood buttons. Click to increase counter.',
+  attachTo: { element: '.mood-counter', on: 'top' },
+  buttons: [
+    { text: 'Back', action: tour.back },
+    { text: 'Done', action: tour.complete }
+  ]
 });
 
 document.getElementById("tourBtn").addEventListener("click", () => {
+  visualContent.classList.remove("visually-hidden"); // Ensure visible
+  toggle.setAttribute("aria-pressed", "true");
   tour.start();
 });
