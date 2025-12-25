@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Accessibility Demo</title>
-  <!-- Material Design 3 CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material/web@1.1.0/dist/md3.min.css">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="./src/css/styles.css">
+
+  <!-- Material Design 3 CSS via Material Web Components -->
+  <link rel="stylesheet" href="https://unpkg.com/@material/web@latest/dist/md3/md3.css" />
+
+  <!-- Shepherd tour CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@8.4.0/dist/css/shepherd.css" />
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo">
-      <img src="./src/assets/headlogo.webp" alt="Project Logo">
-      <span>Accessibility Demo</span>
+
+  <header class="md3-top-app-bar">
+    <div class="md3-top-app-bar__row">
+      <section class="md3-top-app-bar__section md3-top-app-bar__section--align-start">
+        <img src="images/headlogo.webp" alt="Accessibility Demo Logo" class="logo" />
+        <span class="md3-top-app-bar__title">Accessibility Demo</span>
+      </section>
+      <section class="md3-top-app-bar__section md3-top-app-bar__section--align-end" role="navigation">
+        <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener" class="md3-link">LinkedIn</a>
+        <button id="tourBtn" class="md3-button md3-button--outlined" aria-label="Start tour">Tour</button>
+      </section>
     </div>
-    <nav class="nav">
-      <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-      <button id="tourBtn" aria-label="Start tour">Tour</button>
-    </nav>
   </header>
 
-  <!-- Toggle section -->
-  <section class="toggle-section">
-    <button id="visionToggle" aria-pressed="false" aria-label="I wish to see">I wish to see</button>
-    <p id="osShortcut" aria-live="polite">Detecting your system...</p>
-    <span class="tooltip">Toggle to see visual content</span>
-  </section>
+  <!-- Main Content -->
+  <main id="mainContent" class="hidden-visual" aria-live="polite" aria-atomic="true">
+    <!-- Background image (hidden initially) -->
+    <div id="background" aria-hidden="true"></div>
 
-  <!-- Visual content (hidden by default) -->
-  <main id="visualContent" class="visually-hidden">
-    <!-- Search bar -->
-    <form class="search" target="_blank" action="https://www.google.com/search" method="get">
-      <input type="text" name="q" placeholder="Search..." aria-label="Search input">
-      <button type="submit">Search</button>
-    </form>
+    <div class="centered-content" role="main">
+      <!-- Toggle Button -->
+      <button id="toggleVisual" class="md3-button md3-button--outlined" aria-pressed="false" aria-label="I wish to see" aria-describedby="osDesc">
+        I wish to see
+      </button>
 
-    <!-- Mood counter buttons -->
-    <div class="mood-counter">
-      <button aria-label="Mood 1">😀 <span class="count">0</span></button>
-      <button aria-label="Mood 2">😐 <span class="count">0</span></button>
-      <button aria-label="Mood 3">😞 <span class="count">0</span></button>
-      <button aria-label="Mood 4">😡 <span class="count">0</span></button>
-      <button aria-label="Mood 5">😍 <span class="count">0</span></button>
-      <button aria-label="Mood 6">🤢 <span class="count">0</span></button>
-      <button aria-label="Mood 7">😴 <span class="count">0</span></button>
-      <button aria-label="Mood 8">🤯 <span class="count">0</span></button>
-      <button aria-label="Mood 9">🥳 <span class="count">0</span></button>
-      <button aria-label="Mood 10">😎 <span class="count">0</span></button>
+      <p id="osDesc" class="description">
+        Detecting OS...
+      </p>
+
+      <p class="description">Toggle to see visual content</p>
+
+      <!-- Search Bar -->
+      <form id="searchForm" role="search" aria-label="Search">
+        <input
+          type="search"
+          id="searchInput"
+          class="md3-text-field__input"
+          aria-label="Search query"
+          placeholder="Search something..."
+          required
+        />
+        <button type="submit" class="md3-button md3-button--raised">Search</button>
+      </form>
+
+      <!-- Mood Counter Buttons -->
+      <div id="moodCounter" class="mood-counter" role="list" aria-label="Mood counters">
+        <!-- Buttons generated dynamically by JS -->
+      </div>
     </div>
-
-    <!-- Description / Project goal -->
-    <p>The goal of this project is to help visual users understand non-visual users' experience.</p>
   </main>
 
-  <!-- Shepherd JS -->
+  <!-- Shepherd tour JS -->
   <script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.4.0/dist/js/shepherd.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@8.4.0/dist/css/shepherd.css">
 
-  <!-- Custom JS -->
-  <script src="./src/js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

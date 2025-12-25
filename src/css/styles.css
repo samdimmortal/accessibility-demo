@@ -1,113 +1,154 @@
-/* =========================
-   Blind-first default state
-   ========================= */
-body {
+/* Reset some default styles */
+body, html {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background: black;
-  color: black;
-}
-
-/* Hide content visually but keep accessible */
-.visually-hidden {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
   padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  white-space: nowrap;
-  border: 0;
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Toggle always visible */
-.toggle-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
+/* Full page black background for blind mode */
+body.hidden-visual {
+  background-color: black;
   color: white;
 }
 
-.toggle-section button {
-  font-size: 20px;
-  padding: 12px 24px;
-  border-radius: 24px;
-  cursor: pointer;
+/* Visual mode removes black and adds background */
+body.visual-mode {
+  background-color: white;
+  color: black;
 }
 
-/* Tooltip */
-.tooltip {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #ddd;
+/* Background image container, hidden initially */
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/bg.webp');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+  z-index: -1;
 }
 
-/* Header */
-.header {
+/* Show background in visual mode */
+body.visual-mode #background {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header styles */
+.md3-top-app-bar {
+  background-color: #e8def8; /* Light lavender */
+  color: #1d1b20;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background: #ece6f0;
+  padding: 0 1rem;
+  height: 56px;
 }
 
 .logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+/* Centered main content container */
+.centered-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  margin: 2rem auto 4rem;
+  max-width: 700px;
+  gap: 1.5rem;
 }
 
-.logo img {
-  width: 50px;
-  height: 50px;
-}
-
-.nav a, .nav button {
-  margin-left: 16px;
-  font-size: 18px;
-}
-
-/* Search bar */
-.search {
-  margin: 40px auto;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
-.search input {
-  padding: 8px;
-  font-size: 16px;
-  width: 300px;
-}
-
-.search button {
-  padding: 8px 16px;
+/* Toggle button fixed at bottom center */
+#toggleVisual {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 160px;
+  font-size: 1.2rem;
+  padding: 0.75rem 1.5rem;
   cursor: pointer;
+  z-index: 10;
 }
 
-/* Mood counter buttons */
+/* Description text below toggle */
+.description {
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Search form */
+#searchForm {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  gap: 0.5rem;
+}
+
+#searchInput {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+/* Mood Counter buttons container */
 .mood-counter {
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
   justify-content: center;
-  gap: 12px;
-  margin-top: 20px;
+  width: 100%;
 }
 
+/* Mood button styling */
 .mood-counter button {
-  font-size: 24px;
-  padding: 8px;
-  border-radius: 12px;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #1d1b20;
+  background-color: white;
+  color: black;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 60px;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
-/* Main content paragraph */
-main p {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 18px;
+.mood-counter button:hover,
+.mood-counter button:focus {
+  background-color: #e8def8;
+  outline: none;
+}
+
+/* Accessibility: focus visible */
+button:focus-visible {
+  outline: 3px solid #6200ee;
+  outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .mood-counter {
+    gap: 0.75rem;
+  }
+
+  #searchForm {
+    flex-direction: column;
+  }
+
+  #searchInput, #searchForm button {
+    width: 100%;
+  }
 }
